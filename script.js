@@ -160,6 +160,10 @@ function radToXyxy(rad) {
 function toRad(deg) {
     return deg * (Math.PI / 180);
 }
+function tryFixDelaunay() {
+    const delaunayFix = document.getElementById('delaunayFix').checked;
+    return delaunayFix;
+}
 
 function generateVoronoi() {
     const width = getWidth();
@@ -226,10 +230,30 @@ function generateDelaunay() {
     const numPoints = getPoints();
     const colorPalette = getColorPalette();
     const points = d3.range(numPoints).map(() => [Math.random() * width, Math.random() * height]);
+    // if generateEdges is true, add points to each corner and 2 points to each edge
+    const generateEdges = tryFixDelaunay();
+    if (generateEdges) {
+        const edgePoints = [
+            [0, 0],
+            [width, 0],
+            [width, height],
+            [0, height],
+
+            [0, height / 2],
+            [width, height / 2],
+            [width / 2, 0],
+            [width / 2, height]
+        ];
+        edgePoints.forEach(point => points.push(point));
+    }
+
+
     const delaunay = d3.Delaunay.from(points);
     const triangles = delaunay.triangles;
     const gradRandomDir = getGradRandomDir();
     const gradDirection = getGradDirection();
+
+
 
     d3.select('svg').remove();
 

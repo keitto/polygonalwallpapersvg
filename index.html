@@ -14,6 +14,7 @@
             <br>
             <label>Darken: <input type="number" id="darken" value="0.1" min="-0.2" max="1.0" step="0.1"></label>
             <label>Points: <input type="number" id="points" value="200" min="1"></label>
+            <label>Delaunay fix: <input type="checkbox" id="delaunayFix"></label>
         </div>
     
         <form oninput="value.value=parseInt(slider.value)" style="flex: 1;">
@@ -41,34 +42,13 @@
             <button id="export">💾 Export</button>
         </div>
     </div>    
-        <!-- 
-            use these as default:
-        --c-gold-light-1: #ad9d7d;
-        --c-gold-light-2: #c2b59d;
-        --c-gold: #99845c;
-        --c-gold-dark-1: #7a6a4a;
-        --c-gold-dark-2: #5c4f37;
- 
-        --c-darkgrey-light-1: #5d6161;
-        --c-darkgrey-light-2: #868889;
-        --c-darkgrey: #35393A; /* Base color */
-        --c-darkgrey-dark-1: #2a2e2e;
-        --c-darkgrey-dark-2: #202223;
-
-        --c-lightgrey-light-1: #c1c8cd;
-        --c-lightgrey-light-2: #d1d6d9;
-        --c-lightgrey: #B2BAC0; /* Base color */
-        --c-lightgrey-dark-1: #8e959a;
-        --c-lightgrey-dark-2: #6b7073;        
-        -->
-
-        <div id="colorButtons">
-            <button id="addColorButton">Add new color</button>
-            <button id="addGoldsButton">Add golds</button>
-            <button id="addDarksButton">Add darks</button>
-            <button id="addLightsButton">Add lights</button>
-            <button id="clearAllColorsButton">Clear</button>    
-        </div>
+    <div id="colorButtons">
+        <button id="addColorButton">Add new color</button>
+        <button id="addGoldsButton">Add golds</button>
+        <button id="addDarksButton">Add darks</button>
+        <button id="addLightsButton">Add lights</button>
+        <button id="clearAllColorsButton">Clear</button>    
+    </div>
     <div id="colors">
     </div>
 
