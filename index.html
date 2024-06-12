@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Generator</title>
+    <style>
+        svg {
+            /* border: 1px solid black; */
+        }
+    </style>
+</head>
+<body>
+    <button id="generateVoronoi">Voronoi</button>
+    <button id="generateDelaunay">Delaunay</button>
+    <button id="export">Export</button>
+    <label>width: <input type="number" id="width" value="2560"></label>
+    <label>height: <input type="number" id="height" value="1440"></label>
+    <label>Darken: <input type="number" id="darken" value="0.1"></label>
+    <label>Cells: <input type="number" id="cells" value="200"></label>
+
+    <div>
+        <!-- 
+            use these as default:
+        --c-gold-light-1: #ad9d7d;
+        --c-gold-light-2: #c2b59d;
+        --c-gold: #99845c;
+        --c-gold-dark-1: #7a6a4a;
+        --c-gold-dark-2: #5c4f37;
+ 
+        --c-darkgrey-light-1: #5d6161;
+        --c-darkgrey-light-2: #868889;
+        --c-darkgrey: #35393A; /* Base color */
+        --c-darkgrey-dark-1: #2a2e2e;
+        --c-darkgrey-dark-2: #202223;
+
+        --c-lightgrey-light-1: #c1c8cd;
+        --c-lightgrey-light-2: #d1d6d9;
+        --c-lightgrey: #B2BAC0; /* Base color */
+        --c-lightgrey-dark-1: #8e959a;
+        --c-lightgrey-dark-2: #6b7073;        
+        -->
+        <label>Color 1: <input type="color" class="color-picker" value="#ad9d7d"></label>
+        <label>Color 2: <input type="color" class="color-picker" value="#c2b59d"></label>
+        <label>Color 3: <input type="color" class="color-picker" value="#99845c"></label>
+        <label>Color 4: <input type="color" class="color-picker" value="#7a6a4a"></label>
+        <label>Color 5: <input type="color" class="color-picker" value="#5c4f37"></label>
+        <label>Color 6: <input type="color" class="color-picker" value="#5d6161"></label>
+        <label>Color 7: <input type="color" class="color-picker" value="#868889"></label>
+        <label>Color 8: <input type="color" class="color-picker" value="#35393A"></label>
+        <label>Color 9: <input type="color" class="color-picker" value="#2a2e2e"></label>
+        <label>Color 10: <input type="color" class="color-picker" value="#202223"></label>
+        <label>Color 11: <input type="color" class="color-picker" value="#c1c8cd"></label>
+        <label>Color 12: <input type="color" class="color-picker" value="#d1d6d9"></label>
+        <label>Color 13: <input type="color" class="color-picker" value="#B2BAC0"></label>
+        <label>Color 14: <input type="color" class="color-picker" value="#8e959a"></label>
+        <label>Color 15: <input type="color" class="color-picker" value="#6b7073"></label>
+    </div>
+    <div id="container"></div>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
