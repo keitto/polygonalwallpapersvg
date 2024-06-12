@@ -1,5 +1,5 @@
 :root {
-    --dark-gray: #333333;
+    --dark-gray: #111111;
     --white: #dddddd;
     --tr-white: rgba(255, 255, 255, 0.5);
 }
@@ -17,12 +17,11 @@ button {
 }
 
 #ctrls {
-    margin: 20px 10%;
     display: flex; 
     justify-content: space-between;
 }
 
-#colors {
+#ctrls, #colorButtons, #colors  {
     margin: 20px 10%;
 }
 
@@ -40,4 +39,13 @@ button {
     display:none;
     height:4em;
     width:auto;
+}
+.remove-button {
+    background-color: var(--dark-gray);
+    color: var(--white);
+    border: 1px solid var(--white);
+    cursor: pointer;
+    margin-right: 0.5em;
+    border-radius: 5px;
+    height:2em;
 }

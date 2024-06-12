@@ -2,6 +2,102 @@ document.getElementById('generateVoronoi').addEventListener('click', generateVor
 document.getElementById('generateDelaunay').addEventListener('click', generateDelaunay);
 document.getElementById('export').addEventListener('click', exportSVG);
 
+document.addEventListener("DOMContentLoaded", function() {
+    const colorsDiv = document.getElementById("colors");
+    const addColorButton = document.getElementById("addColorButton");
+    const addGoldsButton = document.getElementById("addGoldsButton");
+    const addDarksButton = document.getElementById("addDarksButton");
+    const addLightsButton = document.getElementById("addLightsButton");
+    const clearAllColorsButton = document.getElementById("clearAllColorsButton");
+
+    // Function to add a remove button to a label
+    function addRemoveButton(label) {
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "x";
+        removeButton.className = "remove-button";
+        removeButton.addEventListener("click", function() {
+            colorsDiv.removeChild(label);
+        });
+        label.appendChild(removeButton);
+    }
+
+    // Initialize the color inputs from the defaultColors array
+    defaultColors.forEach(color => {
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+        input.type = "color";
+        input.className = "color-picker";
+        input.value = color;
+        label.appendChild(input);
+        addRemoveButton(label);
+        colorsDiv.appendChild(label);
+    });
+
+    function addColor(color) {
+        const newLabel = document.createElement("label");
+        const input = document.createElement("input");
+        input.type = "color";
+        input.className = "color-picker";
+        input.value = color;
+        newLabel.appendChild(input);
+        addRemoveButton(newLabel);
+        colorsDiv.appendChild(newLabel);
+    }
+    // Add new color input
+    addColorButton.addEventListener("click", function() {
+        const newLabel = document.createElement("label");
+        const input = document.createElement("input");
+        input.type = "color";
+        input.className = "color-picker";
+        newLabel.appendChild(input);
+        addRemoveButton(newLabel);
+        colorsDiv.appendChild(newLabel);
+    });
+
+    addGoldsButton.addEventListener("click", function() {
+        defaultColors.slice(0, 5).forEach(color => {
+            addColor(color);
+        });
+    });
+    addDarksButton.addEventListener("click", function() {
+        defaultColors.slice(5, 10).forEach(color => {
+            addColor(color);
+        });
+    });
+    addLightsButton.addEventListener("click", function() {
+        defaultColors.slice(10, 15).forEach(color => {
+            addColor(color);
+        });
+    });
+    clearAllColorsButton.addEventListener("click", function() {
+        colorsDiv.innerHTML = "";
+    });
+    
+});
+
+const defaultColors = [
+    // golds
+    "#ad9d7d",
+    "#c2b59d",
+    "#99845c",
+    "#7a6a4a",
+    "#5c4f37",
+
+    // darks
+    "#5d6161",
+    "#868889",
+    "#35393A",
+    "#2a2e2e",
+    "#202223",
+
+    // lights
+    "#c1c8cd",
+    "#d1d6d9",
+    "#B2BAC0",
+    "#8e959a",
+    "#6b7073"    
+];
+
 function getColorPalette() {
     const colorPickers = document.querySelectorAll('.color-picker');
     return Array.from(colorPickers).map(picker => picker.value);
@@ -185,7 +281,7 @@ function exportSVG() {
 
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'voronoi.svg';
+    a.download = 'voronoi.svg';// TODO: can also be delaunay
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

@@ -40,7 +40,7 @@
             <button id="generateDelaunay">Delaunay</button>
             <button id="export">💾 Export</button>
         </div>
-    </div>    <div id="colors">
+    </div>    
         <!-- 
             use these as default:
         --c-gold-light-1: #ad9d7d;
@@ -61,22 +61,17 @@
         --c-lightgrey-dark-1: #8e959a;
         --c-lightgrey-dark-2: #6b7073;        
         -->
-        <label>Color 1: <input type="color" class="color-picker" value="#ad9d7d"></label>
-        <label>Color 2: <input type="color" class="color-picker" value="#c2b59d"></label>
-        <label>Color 3: <input type="color" class="color-picker" value="#99845c"></label>
-        <label>Color 4: <input type="color" class="color-picker" value="#7a6a4a"></label>
-        <label>Color 5: <input type="color" class="color-picker" value="#5c4f37"></label>
-        <label>Color 6: <input type="color" class="color-picker" value="#5d6161"></label>
-        <label>Color 7: <input type="color" class="color-picker" value="#868889"></label>
-        <label>Color 8: <input type="color" class="color-picker" value="#35393A"></label>
-        <label>Color 9: <input type="color" class="color-picker" value="#2a2e2e"></label>
-        <label>Color 10: <input type="color" class="color-picker" value="#202223"></label>
-        <label>Color 11: <input type="color" class="color-picker" value="#c1c8cd"></label>
-        <label>Color 12: <input type="color" class="color-picker" value="#d1d6d9"></label>
-        <label>Color 13: <input type="color" class="color-picker" value="#B2BAC0"></label>
-        <label>Color 14: <input type="color" class="color-picker" value="#8e959a"></label>
-        <label>Color 15: <input type="color" class="color-picker" value="#6b7073"></label>
+
+        <div id="colorButtons">
+            <button id="addColorButton">Add new color</button>
+            <button id="addGoldsButton">Add golds</button>
+            <button id="addDarksButton">Add darks</button>
+            <button id="addLightsButton">Add lights</button>
+            <button id="clearAllColorsButton">Clear</button>    
+        </div>
+    <div id="colors">
     </div>
+
     <div id="container"></div>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="script.js"></script>
