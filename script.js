@@ -36,10 +36,10 @@ function darkenColor(color, amount) {
     let g = ((num >> 8) & 0x00FF) - amount;
     let b = (num & 0x0000FF) - amount;
 
-    r = r < 0 ? 0 : r;
-    g = g < 0 ? 0 : g;
-    b = b < 0 ? 0 : b;
-
+    r = r < 0 ? 0 : r > 255 ? 255 : r;
+    g = g < 0 ? 0 : g > 255 ? 255 : g;
+    b = b < 0 ? 0 : b > 255 ? 255 : b;
+    
     return (usePound ? "#" : "") + (r.toString(16).padStart(2, '0')) + (g.toString(16).padStart(2, '0')) + (b.toString(16).padStart(2, '0'));
 }
 
