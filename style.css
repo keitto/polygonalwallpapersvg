@@ -1,20 +1,25 @@
 :root {
     --dark-gray: #333333;
     --white: #dddddd;
+    --tr-white: rgba(255, 255, 255, 0.5);
 }
 
 * {
     background-color: var(--dark-gray);
     color: var(--white);
     border-color: var(--white);
+    font-family: monospace;
 }
 
 button {
     border-radius: 5px;
+    height: 3em;
 }
 
 #ctrls {
     margin: 20px 10%;
+    display: flex; 
+    justify-content: space-between;
 }
 
 #colors {
@@ -24,4 +29,15 @@ button {
 #container svg {
     width: 100%;
     height: auto;
+}
+#ctrls > * {
+    display: inline-block;
+    margin:5px;
+    padding:5px;
+    border: 1px solid var(--tr-white);
+}
+#svgOcta {
+    display:none;
+    height:4em;
+    width:auto;
 }

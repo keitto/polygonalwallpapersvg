@@ -22,9 +22,19 @@ function getHeight() {
     return Number(height);
 }
 
-function getCells() {
-    const cells = document.getElementById('cells').value;
-    return Number(cells);
+function getPoints() {
+    const points = document.getElementById('points').value;
+    return Number(points);
+}
+
+function getGradRandomDir() {
+    const gradRandomDir = document.getElementById('gradRandomDir').checked;
+    return gradRandomDir;
+}
+
+function getGradDirection() {
+    const gradDirection = document.getElementById('gradDirection').value;
+    return gradDirection;
 }
 
 function darkenColor(color, amount) {
@@ -39,33 +49,63 @@ function darkenColor(color, amount) {
     r = r < 0 ? 0 : r > 255 ? 255 : r;
     g = g < 0 ? 0 : g > 255 ? 255 : g;
     b = b < 0 ? 0 : b > 255 ? 255 : b;
-    
+
     return (usePound ? "#" : "") + (r.toString(16).padStart(2, '0')) + (g.toString(16).padStart(2, '0')) + (b.toString(16).padStart(2, '0'));
+}
+
+function radToXyxy(rad) {
+    const x1 = Math.cos(rad);
+    const y1 = Math.sin(rad);
+    const x2 = -x1;
+    const y2 = -y1;
+
+    return { x1, y1, x2, y2 };
+}
+function toRad(deg) {
+    return deg * (Math.PI / 180);
 }
 
 function generateVoronoi() {
     const width = getWidth();
     const height = getHeight();
-    const numPoints = getCells();
+    const numPoints = getPoints();
     const colorPalette = getColorPalette();
     const points = d3.range(numPoints).map(() => [Math.random() * width, Math.random() * height]);
     const voronoi = d3.Delaunay.from(points).voronoi([0, 0, width, height]);
+    const gradRandomDir = getGradRandomDir();
+    const gradDirection = getGradDirection();
 
     d3.select('svg').remove();
 
     const svg = d3.select('#container').append('svg')
-    .attr('viewBox', [0, 0, width, height]);
+        .attr('viewBox', [0, 0, width, height]);
+
+    // Function to calculate gradient direction
+
+    function getGradientDirection() {
+        let angle;
+        if (gradRandomDir) {
+            angle = Math.random() * 360; // Random angle
+        } else {
+            angle = gradDirection % 360; // Set angle
+        }
+        return radToXyxy(angle * (Math.PI / 180));
+    }
+    const test = gradRandomDir ? radToXyxy(Math.random() * 2 * Math.PI) : radToXyxy(gradDirection % 2 * (Math.PI));
+    
 
     // Define gradients
     const defs = svg.append('defs');
     colorPalette.forEach((color, i) => {
-        const darkerColor = darkenColor(color, Math.round(getDarkenValue() * 255)); 
+        const darkerColor = darkenColor(color, Math.round(getDarkenValue() * 255));
+        const { x1, y1, x2, y2 } = getGradientDirection();
+
         const gradient = defs.append('linearGradient')
             .attr('id', `gradient-${i}`)
-            .attr('x1', '0%')
-            .attr('y1', '0%')
-            .attr('x2', '100%')
-            .attr('y2', '100%');
+            .attr('x1', `${(x1 + 1) / 2 * 100}%`)
+            .attr('y1', `${(y1 + 1) / 2 * 100}%`)
+            .attr('x2', `${(x2 + 1) / 2 * 100}%`)
+            .attr('y2', `${(y2 + 1) / 2 * 100}%`);
         
         gradient.append('stop')
             .attr('offset', '0%')
@@ -81,18 +121,19 @@ function generateVoronoi() {
         .data(points)
         .enter().append('path')
         .attr('d', (d, i) => voronoi.renderCell(i))
-        .attr('fill', (d, i) => `url(#gradient-${i % colorPalette.length})`)
-        ;
+        .attr('fill', (d, i) => `url(#gradient-${i % colorPalette.length})`);
 }
 
 function generateDelaunay() {
     const width = getWidth();
     const height = getHeight();
-    const numPoints = getCells();
+    const numPoints = getPoints();
     const colorPalette = getColorPalette();
     const points = d3.range(numPoints).map(() => [Math.random() * width, Math.random() * height]);
     const delaunay = d3.Delaunay.from(points);
     const triangles = delaunay.triangles;
+    const gradRandomDir = getGradRandomDir();
+    const gradDirection = getGradDirection();
 
     d3.select('svg').remove();
 
@@ -103,12 +144,14 @@ function generateDelaunay() {
     const defs = svg.append('defs');
     colorPalette.forEach((color, i) => {
         const darkerColor = darkenColor(color, Math.round(getDarkenValue() * 255)); 
+        const { x1, y1, x2, y2 } = gradRandomDir ? radToXyxy(Math.random() * 2 * Math.PI) : radToXyxy(gradDirection % 2 * (Math.PI));
+        
         const gradient = defs.append('linearGradient')
             .attr('id', `gradient-${i}`)
-            .attr('x1', '0%')
-            .attr('y1', '0%')
-            .attr('x2', '100%')
-            .attr('y2', '100%');
+            .attr('x1', `${(x1 + 1) / 2 * 100}%`)
+            .attr('y1', `${(y1 + 1) / 2 * 100}%`)
+            .attr('x2', `${(x2 + 1) / 2 * 100}%`)
+            .attr('y2', `${(y2 + 1) / 2 * 100}%`);
         
         gradient.append('stop')
             .attr('offset', '0%')
