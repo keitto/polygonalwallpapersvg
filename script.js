@@ -54,8 +54,7 @@ function generateVoronoi() {
     d3.select('svg').remove();
 
     const svg = d3.select('#container').append('svg')
-        .attr('width', width)
-        .attr('height', height);
+    .attr('viewBox', [0, 0, width, height]);
 
     // Define gradients
     const defs = svg.append('defs');
@@ -83,7 +82,6 @@ function generateVoronoi() {
         .enter().append('path')
         .attr('d', (d, i) => voronoi.renderCell(i))
         .attr('fill', (d, i) => `url(#gradient-${i % colorPalette.length})`)
-        //.attr('stroke', 'black')
         ;
 }
 
@@ -99,8 +97,7 @@ function generateDelaunay() {
     d3.select('svg').remove();
 
     const svg = d3.select('#container').append('svg')
-        .attr('width', width)
-        .attr('height', height);
+        .attr('viewBox', [0, 0, width, height]);
 
     // Define gradients
     const defs = svg.append('defs');
@@ -133,7 +130,6 @@ function generateDelaunay() {
                 return `M${p0[0]},${p0[1]}L${p1[0]},${p1[1]}L${p2[0]},${p2[1]}Z`;
             })
             .attr('fill', (d, i) => `url(#gradient-${i % colorPalette.length})`)
-            //.attr('stroke', 'black')
             ;
     }
 

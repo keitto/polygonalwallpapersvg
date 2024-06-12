@@ -4,22 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pattern Generator</title>
-    <style>
-        svg {
-            /* border: 1px solid black; */
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="generateVoronoi">Voronoi</button>
-    <button id="generateDelaunay">Delaunay</button>
-    <button id="export">Export</button>
-    <label>width: <input type="number" id="width" value="2560"></label>
-    <label>height: <input type="number" id="height" value="1440"></label>
-    <label>Darken: <input type="number" id="darken" value="0.1"></label>
-    <label>Cells: <input type="number" id="cells" value="200"></label>
-
-    <div>
+    <div id="ctrls">
+        
+        <button id="generateVoronoi">Voronoi</button>
+        <button id="generateDelaunay">Delaunay</button>
+        <button id="export">💾 Export</button>
+        <label>width: <input type="number" id="width" value="16"></label>
+        <label>height: <input type="number" id="height" value="9"></label>
+        <label>Darken: <input type="number" id="darken" value="0.1"></label>
+        <label>Cells: <input type="number" id="cells" value="200"></label>
+    </div>
+    <div id="colors">
         <!-- 
             use these as default:
         --c-gold-light-1: #ad9d7d;
