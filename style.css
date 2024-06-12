@@ -1,0 +1,27 @@
+:root {
+    --dark-gray: #333333;
+    --white: #dddddd;
+}
+
+* {
+    background-color: var(--dark-gray);
+    color: var(--white);
+    border-color: var(--white);
+}
+
+button {
+    border-radius: 5px;
+}
+
+#ctrls {
+    margin: 20px 10%;
+}
+
+#colors {
+    margin: 20px 10%;
+}
+
+#container svg {
+    width: 100%;
+    height: auto;
+}
