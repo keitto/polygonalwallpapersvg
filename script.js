@@ -147,6 +147,11 @@ function getGradDirection() {
     return gradDirection;
 }
 
+function getDice() {
+    const dice = document.getElementById('dice').value;
+    return Number(dice);
+}
+
 function darkenColor(color, amount) {
     const usePound = color[0] === "#";
     let col = usePound ? color.slice(1) : color;
@@ -179,12 +184,22 @@ function tryFixDelaunay() {
     return delaunayFix;
 }
 
+// Function to generate a random number between 0 and 1 but std deviation 1/d
+function diceRandom(d) {
+    let sum = 0;
+    for (let i = 0; i < d; i++) {
+        sum += Math.random();
+    }
+    return sum / d;
+}
+
 function generateVoronoi() {
     const width = getWidth();
     const height = getHeight();
     const numPoints = getPoints();
     const colorPalette = getColorPalette();
-    const points = d3.range(numPoints).map(() => [Math.random() * width, Math.random() * height]);
+    const dice = getDice();
+    const points = d3.range(numPoints).map(() => [diceRandom(dice) * width, diceRandom(dice) * height]);
     const voronoi = d3.Delaunay.from(points).voronoi([0, 0, width, height]);
     const gradRandomDir = getGradRandomDir();
     const gradDirection = getGradDirection();
@@ -244,7 +259,9 @@ function generateDelaunay() {
     const height = getHeight();
     const numPoints = getPoints();
     const colorPalette = getColorPalette();
-    const points = d3.range(numPoints).map(() => [Math.random() * width, Math.random() * height]);
+    const dice = getDice();
+    //const points = d3.range(numPoints).map(() => [Math.random() * width, Math.random() * height]);
+    const points = d3.range(numPoints).map(() => [diceRandom(dice) * width, diceRandom(dice) * height]);
     // if generateEdges is true, add points to each corner and 2 points to each edge
     const generateEdges = tryFixDelaunay();
     if (generateEdges) {
