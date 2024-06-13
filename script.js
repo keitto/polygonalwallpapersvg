@@ -102,7 +102,7 @@ const defaultColors = [
     "#8e959a",
     "#6b7073"    
 ];
-const rainbowColors = [
+const weirdRainbowColors = [
     "#FF0000",
     "#FF7F00",
     "#FFFF00",
@@ -110,6 +110,15 @@ const rainbowColors = [
     "#0000FF",
     "#4B0082",
     "#8B00FF"
+];
+const rainbowColors = [
+    "#ee82ee",
+    "#4b0082",
+    "#0000ff",
+    "#008000",
+    "#ffff00",
+    "#ffa500",
+    "#ff0000"
 ];
 
 function getColorPalette() {
@@ -145,6 +154,11 @@ function getGradRandomDir() {
 function getGradDirection() {
     const gradDirection = document.getElementById('gradDirection').value;
     return gradDirection;
+}
+
+function getGradRadial() {
+    const gradRadial = document.getElementById('gradRadial').checked;
+    return gradRadial;
 }
 
 function getDice() {
@@ -203,7 +217,8 @@ function generateVoronoi() {
     const voronoi = d3.Delaunay.from(points).voronoi([0, 0, width, height]);
     const gradRandomDir = getGradRandomDir();
     const gradDirection = getGradDirection();
-    //const isRadial = getGradRadial();
+    const isRadial = getGradRadial();
+    const darkenValue = getDarkenValue();
 
     d3.select('svg').remove();
 
@@ -223,26 +238,41 @@ function generateVoronoi() {
     }
     const test = gradRandomDir ? radToXyxy(Math.random() * 2 * Math.PI) : radToXyxy(gradDirection % 2 * (Math.PI));
     
-
-    // Define gradients
     const defs = svg.append('defs');
     colorPalette.forEach((color, i) => {
-        const darkerColor = darkenColor(color, Math.round(getDarkenValue() * -255));
-        const { x1, y1, x2, y2 } = getGradientDirection();
+        const darkerColor = darkenColor(color, Math.round(darkenValue * -255));
 
-        const gradient = defs.append('linearGradient')
-            .attr('id', `gradient-${i}`)
-            .attr('x1', `${(x1 + 1) / 2 * 100}%`)
-            .attr('y1', `${(y1 + 1) / 2 * 100}%`)
-            .attr('x2', `${(x2 + 1) / 2 * 100}%`)
-            .attr('y2', `${(y2 + 1) / 2 * 100}%`);
-        
-        gradient.append('stop')
-            .attr('offset', '0%')
-            .attr('stop-color', color);
-        gradient.append('stop')
-            .attr('offset', '100%')
-            .attr('stop-color', darkerColor);
+        if (isRadial) {
+            const gradient = defs.append('radialGradient')
+                .attr('id', `gradient-${i}`)
+                .attr('cx', '50%')
+                .attr('cy', '50%')
+                .attr('r', '120%')
+                .attr('fx', '50%')
+                .attr('fy', '50%');
+
+            gradient.append('stop')
+                .attr('offset', '0%')
+                .attr('stop-color', darkenValue < 0 ? color : darkerColor);
+            gradient.append('stop')
+                .attr('offset', '100%')
+                .attr('stop-color', darkenValue < 0 ?  darkerColor : color);
+        } else {
+            const { x1, y1, x2, y2 } = getGradientDirection();
+            const gradient = defs.append('linearGradient')
+                .attr('id', `gradient-${i}`)
+                .attr('x1', `${(x1 + 1) / 2 * 100}%`)
+                .attr('y1', `${(y1 + 1) / 2 * 100}%`)
+                .attr('x2', `${(x2 + 1) / 2 * 100}%`)
+                .attr('y2', `${(y2 + 1) / 2 * 100}%`);
+
+            gradient.append('stop')
+                .attr('offset', '0%')
+                .attr('stop-color', color);
+            gradient.append('stop')
+                .attr('offset', '100%')
+                .attr('stop-color', darkerColor);
+        }
     });
 
     // Draw Voronoi cells
@@ -264,6 +294,7 @@ function generateDelaunay() {
     const points = d3.range(numPoints).map(() => [diceRandom(dice) * width, diceRandom(dice) * height]);
     // if generateEdges is true, add points to each corner and 2 points to each edge
     const generateEdges = tryFixDelaunay();
+
     if (generateEdges) {
         const edgePoints = [
             [0, 0],
@@ -295,8 +326,8 @@ function generateDelaunay() {
     const triangles = delaunay.triangles;
     const gradRandomDir = getGradRandomDir();
     const gradDirection = getGradDirection();
-
-
+    const isRadial = getGradRadial();
+    const darkenValue = getDarkenValue();
 
     d3.select('svg').remove();
 
@@ -305,38 +336,92 @@ function generateDelaunay() {
 
     // Define gradients
     const defs = svg.append('defs');
+/*
     colorPalette.forEach((color, i) => {
-        const darkerColor = darkenColor(color, Math.round(getDarkenValue() * -255)); 
+        const darkerColor = darkenColor(color, Math.round(darkenValue * -255));
+
+        if (isRadial) {
+            const gradient = defs.append('radialGradient')
+                .attr('id', `gradient-${i}`)
+                .attr('cx', '50%')
+                .attr('cy', '50%')
+                .attr('r', '120%')
+                .attr('fx', '50%')
+                .attr('fy', '50%');
+
+            gradient.append('stop')
+                .attr('offset', '0%')
+                .attr('stop-color', darkenValue < 0 ? color : darkerColor);
+            gradient.append('stop')
+                .attr('offset', '100%')
+                .attr('stop-color', darkenValue < 0 ?  darkerColor : color);
+        } else {
+            const { x1, y1, x2, y2 } = getGradientDirection();
+            const gradient = defs.append('linearGradient')
+                .attr('id', `gradient-${i}`)
+                .attr('x1', `${(x1 + 1) / 2 * 100}%`)
+                .attr('y1', `${(y1 + 1) / 2 * 100}%`)
+                .attr('x2', `${(x2 + 1) / 2 * 100}%`)
+                .attr('y2', `${(y2 + 1) / 2 * 100}%`);
+
+            gradient.append('stop')
+                .attr('offset', '0%')
+                .attr('stop-color', color);
+            gradient.append('stop')
+                .attr('offset', '100%')
+                .attr('stop-color', darkerColor);
+        }
+    });
+*/    
+    colorPalette.forEach((color, i) => {
+        const darkerColor = darkenColor(color, Math.round(darkenValue * -255)); 
         const { x1, y1, x2, y2 } = gradRandomDir ? radToXyxy(Math.random() * 2 * Math.PI) : radToXyxy(gradDirection % 2 * (Math.PI));
         
-        const gradient = defs.append('linearGradient')
-            .attr('id', `gradient-${i}`)
-            .attr('x1', `${(x1 + 1) / 2 * 100}%`)
-            .attr('y1', `${(y1 + 1) / 2 * 100}%`)
-            .attr('x2', `${(x2 + 1) / 2 * 100}%`)
-            .attr('y2', `${(y2 + 1) / 2 * 100}%`);
-        
-        gradient.append('stop')
-            .attr('offset', '0%')
-            .attr('stop-color', color);
-        gradient.append('stop')
-            .attr('offset', '100%')
-            .attr('stop-color',darkerColor);
-        });
+        if (isRadial) {
+            const gradient = defs.append('radialGradient')
+                .attr('id', `gradient-${i}`)
+                .attr('cx', '50%')
+                .attr('cy', '50%')
+                .attr('r', '120%')
+                .attr('fx', '50%')
+                .attr('fy', '50%');
+
+            gradient.append('stop')
+                .attr('offset', '0%')
+                .attr('stop-color', darkenValue < 0 ? color : darkerColor);
+            gradient.append('stop')
+                .attr('offset', '100%')
+                .attr('stop-color', darkenValue < 0 ?  darkerColor : color);
+        } else {
+            const gradient = defs.append('linearGradient')
+                .attr('id', `gradient-${i}`)
+                .attr('x1', `${(x1 + 1) / 2 * 100}%`)
+                .attr('y1', `${(y1 + 1) / 2 * 100}%`)
+                .attr('x2', `${(x2 + 1) / 2 * 100}%`)
+                .attr('y2', `${(y2 + 1) / 2 * 100}%`);
+            
+            gradient.append('stop')
+                .attr('offset', '0%')
+                .attr('stop-color', color);
+            gradient.append('stop')
+                .attr('offset', '100%')
+                .attr('stop-color',darkerColor);
+        }
+    });
     
-        // Draw Delaunay triangles
-        svg.append('g')
-            .selectAll('path')
-            .data(d3.range(triangles.length / 3))
-            .enter().append('path')
-            .attr('d', i => {
-                const p0 = points[triangles[i * 3]];
-                const p1 = points[triangles[i * 3 + 1]];
-                const p2 = points[triangles[i * 3 + 2]];
-                return `M${p0[0]},${p0[1]}L${p1[0]},${p1[1]}L${p2[0]},${p2[1]}Z`;
-            })
-            .attr('fill', (d, i) => `url(#gradient-${i % colorPalette.length})`)
-            ;
+    // Draw Delaunay triangles
+    svg.append('g')
+        .selectAll('path')
+        .data(d3.range(triangles.length / 3))
+        .enter().append('path')
+        .attr('d', i => {
+            const p0 = points[triangles[i * 3]];
+            const p1 = points[triangles[i * 3 + 1]];
+            const p2 = points[triangles[i * 3 + 2]];
+            return `M${p0[0]},${p0[1]}L${p1[0]},${p1[1]}L${p2[0]},${p2[1]}Z`;
+        })
+        .attr('fill', (d, i) => `url(#gradient-${i % colorPalette.length})`)
+        ;
     }
 
 function exportSVG() {
