@@ -8,22 +8,41 @@
 </head>
 <body>
     <div id="ctrls">
-        <div style="flex: 1;">
-            <label>width: <input type="number" id="width" value="16" min="1"></label>
-            <label>height: <input type="number" id="height" value="9" min="1"></label>
+
+        <div style="flex: 1;</div>">
+            <label
+                title="Aspect ratio x"
+            >width: <input type="number" id="width" value="16" min="1"></label>
+            <label
+                title="Aspect ratio y"
+            >height: <input type="number" id="height" value="9" min="1"></label>
             <br>
-            <label>Gradient brightness: <input type="number" id="darken" value="0.2" min="-1.0" max="1.0" step="0.1"></label>
-            <label>Points: <input type="number" id="points" value="150" min="1"></label>
-            <label>Dice🎲: <input type="number" id="dice" value="1" min="1"></label>
-            <label>Delaunay edge points: <input type="checkbox" id="delaunayFix" checked></label>
+            <label
+                title="0: No gradient. Positive: Brightening gradient. Negative: Darkening gradient."
+            >Gradient brightness: <input type="number" id="darken" value="0.2" min="-1.0" max="1.0" step="0.1"></label>
+            <label
+                title="How many points to generate."
+            >Points: <input type="number" id="points" value="150" min="1"></label>
+            <label
+                title="More dice, more concentrated std deviation."
+            >Dice🎲: <input type="number" id="dice" value="1" min="1"></label>
+            <label
+                title="Add corner and edge points to the Delaunay triangulation ensures the points are arranged rectangularly."
+            >Delaunay edge points: <input type="checkbox" id="delaunayFix" checked></label>
         </div>
     
-        <form oninput="value.value=parseInt(slider.value)" style="flex: 1;">
+        <form oninput="value.value=parseInt(slider.value)" style="flex</form>: 1;">
             <label>Gradient angle</label><br>
-            <label>Random: <input type="checkbox" id="gradRandomDir" checked></label>
-            <label>Preset: <input name="slider" type="range" id="gradDirection" min="0" max="360" value="0"></label>
+            <label
+                title="Every cell has random gradient direction. Only for linear gradients."
+            >Random: <input type="checkbox" id="gradRandomDir" checked></label>
+            <label
+                title="Set angle for linear gradient. 0: Left. 180: Right. Random and radial override this."
+            >Preset: <input name="slider" type="range" id="gradDirection" min="0" max="360" value="0"></label>
             <output name="value" for="gradDirection" id="gradDirectionValue">0</output>
-            <label>Radial gradient: <input type="checkbox" id="gradRadial"></label>
+            <label
+                title="Use radial gradient. Random direction is disabled. Gradient angle is ignored."
+            >Radial gradient: <input type="checkbox" id="gradRadial"></label>
             </label>
             <svg id="svgOcta" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <polygon 
@@ -39,10 +58,16 @@
                 <circle cx="50" cy="50" r="2" fill="black"/>
         </form>
     
-        <div style="flex: 1;">
-            <button id="generateVoronoi">Voronoi</button>
-            <button id="generateDelaunay">Delaunay</button>
-            <button id="export">💾 Export</button>
+        <div style="</div>flex: 1;">
+            <button 
+                title="Make a Voronoi pattern."
+                id="generateVoronoi">Voronoi</button>
+            <button 
+                title="Make a Delaunay pattern."
+                id="generateDelaunay">Delaunay</button>
+            <button 
+                title="Export current pattern."
+                id="export">💾 Export</button>
         </div>
     </div>    
     <div id="colorButtons">
