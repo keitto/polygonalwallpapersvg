@@ -69,6 +69,11 @@ document.addEventListener("DOMContentLoaded", function() {
             addColor(color);
         });
     });
+    addRainbowButton.addEventListener("click", function() {
+        rainbowColors.forEach(color => {
+            addColor(color);
+        });
+    });
     clearAllColorsButton.addEventListener("click", function() {
         colorsDiv.innerHTML = "";
     });
@@ -96,6 +101,15 @@ const defaultColors = [
     "#B2BAC0",
     "#8e959a",
     "#6b7073"    
+];
+const rainbowColors = [
+    "#FF0000",
+    "#FF7F00",
+    "#FFFF00",
+    "#00FF00",
+    "#0000FF",
+    "#4B0082",
+    "#8B00FF"
 ];
 
 function getColorPalette() {
