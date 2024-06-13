@@ -12,14 +12,14 @@
             <label>width: <input type="number" id="width" value="16" min="1"></label>
             <label>height: <input type="number" id="height" value="9" min="1"></label>
             <br>
-            <label>Darken: <input type="number" id="darken" value="0.1" min="-0.2" max="1.0" step="0.1"></label>
-            <label>Points: <input type="number" id="points" value="200" min="1"></label>
+            <label>Gradient brightness: <input type="number" id="darken" value="0.1" min="-1.0" max="1.0" step="0.1"></label>
+            <label>Points: <input type="number" id="points" value="150" min="1"></label>
             <label>Delaunay edge verts: <input type="checkbox" id="delaunayFix" checked></label>
         </div>
     
         <form oninput="value.value=parseInt(slider.value)" style="flex: 1;">
             <label>Gradient angle</label><br>
-            <label>Random: <input type="checkbox" id="gradRandomDir"></label>
+            <label>Random: <input type="checkbox" id="gradRandomDir" checked></label>
             <label>Preset: <input name="slider" type="range" id="gradDirection" min="0" max="360" value="0"></label>
             <output name="value" for="gradDirection" id="gradDirectionValue">0</output>
             <svg id="svgOcta" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +53,7 @@
     </div>
 
     <div id="container"></div>
-    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

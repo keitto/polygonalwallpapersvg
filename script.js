@@ -174,6 +174,7 @@ function generateVoronoi() {
     const voronoi = d3.Delaunay.from(points).voronoi([0, 0, width, height]);
     const gradRandomDir = getGradRandomDir();
     const gradDirection = getGradDirection();
+    //const isRadial = getGradRadial();
 
     d3.select('svg').remove();
 
@@ -197,7 +198,7 @@ function generateVoronoi() {
     // Define gradients
     const defs = svg.append('defs');
     colorPalette.forEach((color, i) => {
-        const darkerColor = darkenColor(color, Math.round(getDarkenValue() * 255));
+        const darkerColor = darkenColor(color, Math.round(getDarkenValue() * -255));
         const { x1, y1, x2, y2 } = getGradientDirection();
 
         const gradient = defs.append('linearGradient')
@@ -274,7 +275,7 @@ function generateDelaunay() {
     // Define gradients
     const defs = svg.append('defs');
     colorPalette.forEach((color, i) => {
-        const darkerColor = darkenColor(color, Math.round(getDarkenValue() * 255)); 
+        const darkerColor = darkenColor(color, Math.round(getDarkenValue() * -255)); 
         const { x1, y1, x2, y2 } = gradRandomDir ? radToXyxy(Math.random() * 2 * Math.PI) : radToXyxy(gradDirection % 2 * (Math.PI));
         
         const gradient = defs.append('linearGradient')
