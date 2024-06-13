@@ -239,10 +239,21 @@ function generateDelaunay() {
             [width, height],
             [0, height],
 
+            /*
             [0, height / 2],
             [width, height / 2],
             [width / 2, 0],
             [width / 2, height]
+            */
+            // 2 points per edge
+            [0, height / 3],
+            [0, 2 * height / 3],
+            [width, height / 3],
+            [width, 2 * height / 3],
+            [width / 3, 0],
+            [2 * width / 3, 0],
+            [width / 3, height],
+            [2 * width / 3, height]
         ];
         edgePoints.forEach(point => points.push(point));
     }

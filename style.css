@@ -15,6 +15,10 @@ button {
     border-radius: 5px;
     height: 3em;
 }
+/* input type number */
+input[type=number] {
+    max-width: 4em;
+}
 
 #ctrls {
     display: flex; 
